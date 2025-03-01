@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transformer Reclamation Workshops GEPCO</title>
+    <title>Transformer Reclamation Workshops/M&T GEPCO</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <style>
         body {
@@ -76,6 +76,7 @@
               
                 <li><a href="#tab5">T/Fs Abstracts</a></li>
                 <li><a href="#tab6">Submit Online Results</a></li>
+                <li><a href="#tab7">Submit Online Checking</a></li>
             </ul>
         </nav>
 
@@ -118,7 +119,7 @@
             <select id="dropdown-tab5">
                 <option value="">Select Abstract Type</option>
                 <option value="https://docs.google.com/spreadsheets/d/1-84HZgtXnOpyGwYHapxAvJfZ6rsEvQbTYnoPGMp_ISs/edit?usp=sharing">Daily Reclaimed Statement</option>
-                <option value="google-sheet-link-total-damaged">Total Damaged</option>
+                <option value="https://docs.google.com/spreadsheets/d/1ludkbDevBLddzMCV5Q_wb01TB9IJu8GrJpdP5hjYZ3U/edit?usp=drivesdk">Transformer Result Sheet</option>
                 <option value="google-sheet-link-oil-filling">Oil Filling</option>
             </select>
         </section>
@@ -131,10 +132,25 @@
                 <option value="https://docs.google.com/forms/d/e/1FAIpQLSdOXVHVeR61BBGky19ULXXKGUxDqKsS1t61AlAYWHe9Sq_YXQ/viewform?usp=header">TRW SKT</option>
             </select>
         </section>
+            <section id="tab7" class="tab-content">
+            <h2>Submit Online Checking</h2>
+            <select id="dropdown-tab7">
+                <option value="">Select M&T Division/Circle</option>
+                <option value="https://docs.google.com/forms/d/e/1FAIpQLSd4whoP6aLfTzdHunZcP5RvMcxD3jT5ZTT5iYJaKIuk3Z6Qtw/viewform?usp=header">M&T City</option>
+                <option value="https://docs.google.com/forms/d/e/1FAIpQLSfkXyxFNlbNXvPU2S8UdgeQfH-dOzaoWROty1IY6Tm2h3GIiw/viewform?usp=header"> M&T Cantt</option>
+                <option value="https://docs.google.com/forms/d/e/1FAIpQLSezaWBaKwjsaNJ0XlyyDx4cTbrkfLYF9MsGNOya3f9e5DlM2Q/viewform?usp=header">M&T Gujrat</option>
+                <option value="https://docs.google.com/forms/d/e/1FAIpQLSf55B8_BUGv_WdpnQjk0jne7Mkg_pqI4YPC7PewpZtJWWa9CA/viewform?usp=header">M&T Sialkot</option>
+                <option value="https://docs.google.com/forms/d/e/1FAIpQLSej3rKXn6EjiYZcCYr8PWtaeL81jQQQxC2lda0QLBtHfizGcA/viewform?usp=header">M&T Narowal</option>
+                <option value="https://docs.google.com/forms/d/e/1FAIpQLSfDXKFQRbEi4mPAZe0Q--ocmBjaap3L2FDQlWSfrdKFChuiog/viewform?usp=header">M&T MB Din</option>
+                <option value="https://docs.google.com/forms/d/e/1FAIpQLSdpygf4s1hL972-74bKr6TiHvb915LhmH6JzcTiQ9h8ADl2fA/viewform?usp=header">RM M&T</option>
+         
+         
+            </select>
+        </section>
 
         <section>
             <h2>Contact</h2>
-            <p>Website created and managed by Muhammad Akram, XEN TRW GEPCO Gujranwala</p>
+            <p>Website created and managed by Muhammad Akram, Additional SE GEPCO Gujranwala</p>
             <p>Email: <a href="mailto:eengingineer.akram@gmail.com">eengingineer.akram@gmail.com</a></p>
             <textarea rows="5" placeholder="Send your feedback here..."></textarea>
             <button onclick="alert('Feedback sent to eengingineer.akram@gmail.com')">Send Feedback</button>
@@ -167,6 +183,8 @@
         setupDropdown('dropdown-tab3');
         setupDropdown('dropdown-tab5');
         setupDropdown('dropdown-tab6');
+        setupDropdown('dropdown-tab7');
+        
     </script>
 </body>
 </html>
