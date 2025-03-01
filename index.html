@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformer Reclamation Workshops GEPCO</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        body {
+            background: #f7f9fc;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+        }
+        header, footer {
+            background-color: #004085;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2rem;
+        }
+        .tab-content {
+            margin-top: 1.5rem;
+        }
+        nav ul {
+            display: flex;
+            justify-content: space-evenly;
+            background-color: #007bff;
+            border-radius: 5px;
+            padding: 0.5rem 0;
+        }
+        nav ul li {
+            list-style: none;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav ul li a:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            color: #004085;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Transformer Reclamation Workshops GEPCO</h1>
+        <div id="datetime"></div>
+    </header>
+
+    <main class="container">
+        <nav>
+            <ul>
+                <li><a href="#tab1">Update T/Fs Status at Stores</a></li>
+                <li><a href="#tab2">View Damaged T/Fs Status</a></li>
+                <li><a href="#tab3">Update T/Fs Repairing Status</a></li>
+              
+                <li><a href="#tab5">T/Fs Abstracts</a></li>
+                <li><a href="#tab6">Submit Online Results</a></li>
+            </ul>
+        </nav>
+
+        <section id="tab1" class="tab-content">
+            <h2>Select store to update transformer status</h2>
+            <select id="dropdown-tab1">
+                <option value="">Select Field Store</option>
+                <option value="https://docs.google.com/spreadsheets/d/1XG1Hpbg_oh2PyicbX0kl9mbtQY-rFJnGWiUOJR6N77I/edit?usp=sharing">Field Store HZD</option>
+                <option value="https://docs.google.com/spreadsheets/d/19Y3mlVUq7_aakA5i_lEllppaEknSqmBF8Kugw87wi2k/edit?usp=sharing">Field Store MB Din</option>
+                <option value="https://docs.google.com/spreadsheets/d/1cwyRCVcwJmlSBZbJeu9bhksc74p47Iu4bH5THmrPuas/edit?usp=sharing">Field Store NRW</option>
+                <option value="https://docs.google.com/spreadsheets/d/1s5Iyxm-HseRodHQ8-mTZyOhkA0ejHGvvG-y4DXe-Tmw/edit?usp=sharing">Field Store GRW</option>
+                <option value="https://docs.google.com/spreadsheets/d/1oyqUfh1nlJb6XWEhNJBkDDENReC7WDdKvgyjmMnqSdA/edit?usp=sharing">Field Store GRT</option>
+                <option value="https://docs.google.com/spreadsheets/d/1qMehKZzAT6PzTcAz_PEYEPTk1W3mHplgNh4W_FtcnaA/edit?usp=sharing">Field Store SKT</option>
+                <option value="https://docs.google.com/spreadsheets/d/118A22zfmjnjTPO4YQNC3Q_UViYsYnQ1UoRG7StE71EE/edit?usp=sharing">Field Store WZD</option>
+                <option value="https://docs.google.com/spreadsheets/d/1PIqJnTunGcXdFFiBIvz-1QMlmysCy7KbE_FrTZvndZk/edit?usp=sharing">Field Store Daska</option>
+                <option value="https://docs.google.com/spreadsheets/d/1ZEt6I9qlS3hv1lOSfePLM_jxvc8YSyhelNwJm0NXJrU/edit?usp=sharing">Regional Store</option>
+            </select>
+        </section>
+
+        <section id="tab2" class="tab-content">
+            <h2>View Damaged Transformers Status</h2>
+            <select id="dropdown-tab2">
+                <option value="">Select Status</option>
+                <option value="https://docs.google.com/spreadsheets/d/1wYpbbgViSdzBzw1QgEI4-ykhYx7SYTrBd7zPp7v1iYQ/edit?usp=sharing">Damaged Transformers</option>
+                <option value="https://docs.google.com/spreadsheets/d/1wYpbbgViSdzBzw1QgEI4-ykhYx7SYTrBd7zPp7v1iYQ/edit?usp=sharing">Irrepairable Transformers</option>
+  
+            </select>
+        </section>
+
+        <section id="tab3" class="tab-content">
+            <h2>Update Transformers Repairing Status</h2>
+            <select id="dropdown-tab3">
+                <option value="">Select TRW</option>
+                <option value="https://docs.google.com/spreadsheets/d/1K080cPaRrA1bc2YwG9CfYQuxy04JozncRfPqsqkb1FA/edit?usp=sharing">TRW Gujranwala</option>
+                <option value="https://docs.google.com/spreadsheets/d/197Fl1uzKPoyU2NBwIySAkPrFYSuEpDZ_43JEpeKvC3c/edit?usp=sharing">TRW Sialkot</option>
+            </select>
+       
+        <section id="tab5" class="tab-content">
+            <h2>Transformers Abstracts</h2>
+            <select id="dropdown-tab5">
+                <option value="">Select Abstract Type</option>
+                <option value="https://docs.google.com/spreadsheets/d/1-84HZgtXnOpyGwYHapxAvJfZ6rsEvQbTYnoPGMp_ISs/edit?usp=sharing">Daily Reclaimed Statement</option>
+                <option value="google-sheet-link-total-damaged">Total Damaged</option>
+                <option value="google-sheet-link-oil-filling">Oil Filling</option>
+            </select>
+        </section>
+
+        <section id="tab6" class="tab-content">
+            <h2>Submit Online Results</h2>
+            <select id="dropdown-tab6">
+                <option value="">Select TRW</option>
+                <option value="https://docs.google.com/forms/d/e/1FAIpQLSeQ0X_uzQ0wDQI-PkQ0I59Gq9MqbUCUeRw2Hjx2HcQoLYhKzQ/viewform?usp=header">TRW GRW</option>
+                <option value="https://docs.google.com/forms/d/e/1FAIpQLSdOXVHVeR61BBGky19ULXXKGUxDqKsS1t61AlAYWHe9Sq_YXQ/viewform?usp=header">TRW SKT</option>
+            </select>
+        </section>
+
+        <section>
+            <h2>Contact</h2>
+            <p>Website created and managed by Muhammad Akram, XEN TRW GEPCO Gujranwala</p>
+            <p>Email: <a href="mailto:eengingineer.akram@gmail.com">eengingineer.akram@gmail.com</a></p>
+            <textarea rows="5" placeholder="Send your feedback here..."></textarea>
+            <button onclick="alert('Feedback sent to eengingineer.akram@gmail.com')">Send Feedback</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Muhammad Akram. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const datetimeElement = document.getElementById('datetime');
+        setInterval(() => {
+            const now = new Date();
+            datetimeElement.textContent = now.toLocaleString();
+        }, 1000);
+
+        function setupDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.addEventListener('change', (e) => {
+                const link = e.target.value;
+                if (link) {
+                    window.open(link, '_blank');
+                }
+            });
+        }
+
+        setupDropdown('dropdown-tab1');
+        setupDropdown('dropdown-tab2');
+        setupDropdown('dropdown-tab3');
+        setupDropdown('dropdown-tab5');
+        setupDropdown('dropdown-tab6');
+    </script>
+</body>
+</html>
