@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformer Reclamation Workshops | M&T GEPCO</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #005f87;
+            --secondary-color: #00a8e8;
+            --accent-color: #ff6b35;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --light-text: #f8f9fa;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-text);
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+            opacity: 0.1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+        
+        #datetime {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .tab-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: none;
+            padding: 0;
+        }
+        
+        .tab-nav li {
+            list-style: none;
+            flex: 1 1 auto;
+            min-width: 200px;
+        }
+        
+        .tab-nav a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .tab-nav a:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tab-nav a i {
+            font-size: 1.2rem;
+        }
+        
+        .tab-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .tab-content:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 3px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: white;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            appearance: none;
+            transition: all 0.3s ease;
+        }
+        
+        select:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(0, 168, 232, 0.2);
+            outline: none;
+        }
+        
+        .contact-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            min-height: 150px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        textarea:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(0, 168, 232, 0.2);
+            outline: none;
+        }
+        
+        button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 95, 135, 0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 95, 135, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-text);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tab-nav li {
+                min-width: 100%;
+            }
+            
+            .tab-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-bolt"></i> Transformer Reclamation Workshops</h1>
+            <p class="subtitle">M&T Division - GEPCO Gujranwala</p>
+            <div id="datetime"></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <nav>
+            <ul class="tab-nav">
+                <li><a href="#tab1"><i class="fas fa-warehouse"></i> Update T/Fs Status</a></li>
+                <li><a href="#tab2"><i class="fas fa-exclamation-triangle"></i> View Damaged T/Fs</a></li>
+                <li><a href="#tab3"><i class="fas fa-tools"></i> Update Repair Status</a></li>
+                <li><a href="#tab5"><i class="fas fa-file-alt"></i> T/Fs Abstracts</a></li>
+                <li><a href="#tab6"><i class="fas fa-cloud-upload-alt"></i> Submit Results</a></li>
+            </ul>
+        </nav>
+
+        <section id="tab1" class="tab-content">
+            <h2><i class="fas fa-warehouse"></i> Select store to update transformer status</h2>
+            <select id="dropdown-tab1">
+                <option value="">Select Field Store</option>
+                <option value="https://docs.google.com/spreadsheets/d/1XG1Hpbg_oh2PyicbX0kl9mbtQY-rFJnGWiUOJR6N77I/edit?usp=sharing">Field Store HZD</option>
+                <option value="https://docs.google.com/spreadsheets/d/19Y3mlVUq7_aakA5i_lEllppaEknSqmBF8Kugw87wi2k/edit?usp=sharing">Field Store MB Din</option>
+                <option value="https://docs.google.com/spreadsheets/d/1cwyRCVcwJmlSBZbJeu9bhksc74p47Iu4bH5THmrPuas/edit?usp=sharing">Field Store NRW</option>
+                <option value="https://docs.google.com/spreadsheets/d/1s5Iyxm-HseRodHQ8-mTZyOhkA0ejHGvvG-y4DXe-Tmw/edit?usp=sharing">Field Store GRW</option>
+                <option value="https://docs.google.com/spreadsheets/d/1oyqUfh1nlJb6XWEhNJBkDDENReC7WDdKvgyjmMnqSdA/edit?usp=sharing">Field Store GRT</option>
+                <option value="https://docs.google.com/spreadsheets/d/1qMehKZzAT6PzTcAz_PEYEPTk1W3mHplgNh4W_FtcnaA/edit?usp=sharing">Field Store SKT</option>
+                <option value="https://docs.google.com/spreadsheets/d/118A22zfmjnjTPO4YQNC3Q_UViYsYnQ1UoRG7StE71EE/edit?usp=sharing">Field Store WZD</option>
+                <option value="https://docs.google.com/spreadsheets/d/1PIqJnTunGcXdFFiBIvz-1QMlmysCy7KbE_FrTZvndZk/edit?usp=sharing">Field Store Daska</option>
+                <option value="https://docs.google.com/spreadsheets/d/1ZEt6I9qlS3hv1lOSfePLM_jxvc8YSyhelNwJm0NXJrU/edit?usp=sharing">Regional Store</option>
+            </select>
+        </section>
+
+        <section id="tab2" class="tab-content">
+            <h2><i class="fas fa-exclamation-triangle"></i> View Damaged Transformers Status</h2>
+            <select id="dropdown-tab2">
+                <option value="">Select Status</option>
+                <option value="tfDamaged.html">Damaged Transformers</option>
+                <option value="tfReclaimed.html">Reclaimed Transformers</option>
+                <option value="tfIrreparable.html">Irrepairable Transformers</option>
+            </select>
+        </section>
+
+        <section id="tab3" class="tab-content">
+            <h2><i class="fas fa-tools"></i> Update Transformers Repairing Status</h2>
+            <select id="dropdown-tab3">
+                <option value="">Select TRW</option>
+                <option value="https://docs.google.com/spreadsheets/d/1K080cPaRrA1bc2YwG9CfYQuxy04JozncRfPqsqkb1FA/edit?usp=sharing">TRW Gujranwala</option>
+                <option value="https://docs.google.com/spreadsheets/d/197Fl1uzKPoyU2NBwIySAkPrFYSuEpDZ_43JEpeKvC3c/edit?usp=sharing">TRW Sialkot</option>
+            </select>
+        </section>
+
+        <section id="tab5" class="tab-content">
+            <h2><i class="fas fa-file-alt"></i> Transformers Abstracts</h2>
+            <select id="dropdown-tab5">
+                <option value="">Select Abstract Type</option>
+                <option value="absTRW.html">All Daily Reclaimed Statements</option>
+                <option value="https://docs.google.com/spreadsheets/d/1ludkbDevBLddzMCV5Q_wb01TB9IJu8GrJpdP5hjYZ3U/edit?usp=drivesdk">Transformer Result Sheet</option>
+                <option value="google-sheet-link-oil-filling">Oil Filling</option>
+            </select>
+        </section>
+
+        <section id="tab6" class="tab-content">
+            <h2><i class="fas fa-cloud-upload-alt"></i> Submit Online Results</h2>
+            <select id="dropdown-tab6">
+                <option value="">Select TRW</option>
+                <option value="https://docs.google.com/forms/d/e/1FAIpQLSeQ0X_uzQ0wDQI-PkQ0I59Gq9MqbUCUeRw2Hjx2HcQoLYhKzQ/viewform?usp=header">TRW GRW</option>
+                <option value="https://docs.google.com/forms/d/e/1FAIpQLSdOXVHVeR61BBGky19ULXXKGUxDqKsS1t61AlAYWHe9Sq_YXQ/viewform?usp=header">TRW SKT</option>
+            </select>
+        </section>
+           
+        <section class="contact-card">
+            <h2><i class="fas fa-envelope"></i> Contact</h2>
+            <div class="contact-info">
+                <p><i class="fas fa-user-tie"></i> Website created and managed by Muhammad Akram, Additional SE GEPCO Gujranwala</p>
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:eengingineer.akram@gmail.com">eengingineer.akram@gmail.com</a></p>
+            </div>
+            
+            <h3><i class="fas fa-comment-alt"></i> Feedback</h3>
+            <textarea placeholder="Please share your feedback or suggestions here..."></textarea>
+            <button onclick="sendFeedback()"><i class="fas fa-paper-plane"></i> Send Feedback</button>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Transformer Reclamation Workshops, M&T Division - GEPCO Gujranwala. All rights reserved.</p>
+            <p>Developed by Muhammad Akram</p>
+        </div>
+    </footer>
+
+    <script>
+        // Update datetime display
+        const datetimeElement = document.getElementById('datetime');
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            datetimeElement.textContent = now.toLocaleDateString('en-US', options);
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Dropdown functionality
+        function setupDropdown(dropdownId) {
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.addEventListener('change', (e) => {
+                const link = e.target.value;
+                if (link) {
+                    window.open(link, '_blank');
+                    // Reset dropdown after selection
+                    setTimeout(() => {
+                        e.target.value = '';
+                    }, 1000);
+                }
+            });
+        }
+
+        // Initialize all dropdowns
+        setupDropdown('dropdown-tab1');
+        setupDropdown('dropdown-tab2');
+        setupDropdown('dropdown-tab3');
+        setupDropdown('dropdown-tab5');
+        setupDropdown('dropdown-tab6');
+        
+        // Feedback function
+        function sendFeedback() {
+            const feedbackText = document.querySelector('textarea').value;
+            if (feedbackText.trim() === '') {
+                alert('Please enter your feedback before sending.');
+                return;
+            }
+            
+            // In a real implementation, you would send this to a server
+            console.log('Feedback submitted:', feedbackText);
+            
+            // Show confirmation
+            alert('Thank you for your feedback! It has been sent to eengingineer.akram@gmail.com');
+            document.querySelector('textarea').value = '';
+        }
+    </script>
+</body>
+</html>
