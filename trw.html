@@ -1,416 +1,512 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transformer Reclamation Workshops | M&T GEPCO</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #005f87;
-            --secondary-color: #00a8e8;
-            --accent-color: #ff6b35;
-            --light-bg: #f8f9fa;
-            --dark-text: #212529;
-            --light-text: #f8f9fa;
-        }
-        
-        body {
-            background-color: var(--light-bg);
-            color: var(--dark-text);
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            line-height: 1.6;
-        }
-        
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: var(--light-text);
-            padding: 2rem 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        header::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
-            opacity: 0.1;
-        }
-        
-        .header-content {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-        
-        #datetime {
-            background: rgba(0, 0, 0, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            display: inline-block;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        
-        main {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        
-        .tab-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            background: none;
-            padding: 0;
-        }
-        
-        .tab-nav li {
-            list-style: none;
-            flex: 1 1 auto;
-            min-width: 200px;
-        }
-        
-        .tab-nav a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            text-align: center;
-            padding: 1rem;
-            background: white;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .tab-nav a:hover {
-            background: var(--secondary-color);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        .tab-nav a i {
-            font-size: 1.2rem;
-        }
-        
-        .tab-content {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-        }
-        
-        .tab-content:hover {
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-        }
-        
-        h2 {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-        
-        h2::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: var(--accent-color);
-            border-radius: 3px;
-        }
-        
-        select {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            background-color: white;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1em;
-            appearance: none;
-            transition: all 0.3s ease;
-        }
-        
-        select:focus {
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(0, 168, 232, 0.2);
-            outline: none;
-        }
-        
-        .contact-card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-        }
-        
-        textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            min-height: 150px;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        textarea:focus {
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(0, 168, 232, 0.2);
-            outline: none;
-        }
-        
-        button {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 8px rgba(0, 95, 135, 0.2);
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 95, 135, 0.3);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
-        footer {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: var(--light-text);
-            text-align: center;
-            padding: 2rem 1rem;
-            margin-top: 3rem;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .tab-nav li {
-                min-width: 100%;
-            }
-            
-            .tab-content {
-                padding: 1.5rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transformer Reclamation Workshops | M&T GEPCO</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #005f87;
+      --secondary-color: #00a8e8;
+      --accent-color: #ff6b35;
+      --light-bg: #f8f9fa;
+      --dark-text: #212529;
+      --light-text: #f8f9fa;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --danger-color: #dc3545;
+    }
+
+    body { 
+      background-color: var(--light-bg); 
+      color: var(--dark-text); 
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; 
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    header { 
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); 
+      color: var(--light-text); 
+      padding: 2rem 1rem;
+      position: relative;
+    }
+    
+    .header-content { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      text-align: center; 
+      position: relative;
+      z-index: 2;
+    }
+    
+    h1 { 
+      font-size: 2.5rem; 
+      font-weight: 700; 
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    
+    .subtitle { 
+      font-size: 1.1rem; 
+      margin-bottom: 1rem; 
+      opacity: 0.9;
+    }
+
+    main { 
+      max-width: 1200px; 
+      margin: 2rem auto; 
+      padding: 0 1rem;
+      flex: 1;
+    }
+
+    /* Grid option cards */
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .option-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--primary-color);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      text-align: center;
+      height: 100%;
+    }
+    
+    .option-card i {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--secondary-color);
+    }
+    
+    .option-card:hover {
+      background: var(--secondary-color);
+      color: #fff;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    
+    .option-card:hover i {
+      color: #fff;
+    }
+    
+    .option-card .card-description {
+      font-size: 0.9rem;
+      font-weight: normal;
+      margin-top: 0.5rem;
+      opacity: 0.8;
+    }
+
+    /* Iframe view */
+    .iframe-container {
+      display: none;
+      flex-direction: column;
+      gap: 1.5rem;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    iframe {
+      width: 100%;
+      height: 70vh;
+      min-height: 500px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+      background: #fff;
+    }
+    
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .back-btn:hover {
+      background: var(--secondary-color);
+      transform: translateX(-3px);
+    }
+    
+    .back-btn i {
+      transition: transform 0.2s ease;
+    }
+    
+    .back-btn:hover i {
+      transform: translateX(-3px);
+    }
+
+    .tab-content { 
+      background: #fff; 
+      border-radius: 16px; 
+      padding: 2rem; 
+      margin-bottom: 2rem; 
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08); 
+      animation: fadeIn 0.5s ease;
+    }
+    
+    h2 { 
+      color: var(--primary-color); 
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    footer { 
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); 
+      color: white; 
+      text-align: center; 
+      padding: 2rem 1rem;
+      margin-top: auto;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    #datetime {
+      background: rgba(255,255,255,0.15);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .loading-spinner {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      .option-grid { grid-template-columns: 1fr; }
+      .tab-content { padding: 1.5rem; }
+      iframe { min-height: 400px; }
+    }
+    
+    /* Breadcrumb navigation */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .breadcrumb a {
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    
+    .breadcrumb a:hover {
+      color: var(--secondary-color);
+      text-decoration: underline;
+    }
+    
+    .breadcrumb-separator {
+      color: #6c757d;
+    }
+    
+    /* Status indicators */
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: rgba(0,0,0,0.05);
+    }
+    
+    .status-indicator.active {
+      background: rgba(40, 167, 69, 0.15);
+      color: var(--success-color);
+    }
+    
+    .status-indicator.inactive {
+      background: rgba(220, 53, 69, 0.15);
+      color: var(--danger-color);
+    }
+
+    /* Tab navigation */
+    .tab-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 0.5rem;
+    }
+    
+    .tab-nav button {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      background: none;
+      color: var(--primary-color);
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 8px 8px 0 0;
+      transition: all 0.2s ease;
+    }
+    
+    .tab-nav button:hover {
+      background: rgba(0, 95, 135, 0.1);
+    }
+    
+    .tab-nav button.active {
+      background: var(--primary-color);
+      color: white;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1><i class="fas fa-bolt"></i> Transformer Reclamation Workshops</h1>
-            <p class="subtitle">M&T Division - GEPCO Gujranwala</p>
-            <div id="datetime"></div>
-        </div>
-    </header>
+  <header>
+    <div class="header-content">
+      <h1><i class="fas fa-bolt"></i> Transformer Reclamation Workshops</h1>
+      <p class="subtitle">M&T Division - GEPCO Gujranwala</p>
+      <div id="datetime"></div>
+    </div>
+  </header>
 
-    <main class="container">
-        <nav>
-            <ul class="tab-nav">
-                <li><a href="#tab1"><i class="fas fa-warehouse"></i> Update T/Fs Status</a></li>
-                <li><a href="#tab2"><i class="fas fa-exclamation-triangle"></i> View Damaged T/Fs</a></li>
-                <li><a href="#tab3"><i class="fas fa-tools"></i> Update Repair Status</a></li>
-                <li><a href="#tab5"><i class="fas fa-file-alt"></i> T/Fs Abstracts</a></li>
-                <li><a href="#tab6"><i class="fas fa-cloud-upload-alt"></i> Submit Results</a></li>
-            </ul>
-        </nav>
+  <main class="container">
+    <div class="breadcrumb">
+      <a href="#"><i class="fas fa-home"></i> Home</a>
+      <span class="breadcrumb-separator">/</span>
+      <span>Dashboard</span>
+    </div>
 
-        <section id="tab1" class="tab-content">
-            <h2><i class="fas fa-warehouse"></i> Select store to update transformer status</h2>
-            <select id="dropdown-tab1">
-                <option value="">Select Field Store</option>
-                <option value="https://docs.google.com/spreadsheets/d/1XG1Hpbg_oh2PyicbX0kl9mbtQY-rFJnGWiUOJR6N77I/edit?usp=sharing">Field Store HZD</option>
-                <option value="https://docs.google.com/spreadsheets/d/19Y3mlVUq7_aakA5i_lEllppaEknSqmBF8Kugw87wi2k/edit?usp=sharing">Field Store MB Din</option>
-                <option value="https://docs.google.com/spreadsheets/d/1cwyRCVcwJmlSBZbJeu9bhksc74p47Iu4bH5THmrPuas/edit?usp=sharing">Field Store NRW</option>
-                <option value="https://docs.google.com/spreadsheets/d/1s5Iyxm-HseRodHQ8-mTZyOhkA0ejHGvvG-y4DXe-Tmw/edit?usp=sharing">Field Store GRW</option>
-                <option value="https://docs.google.com/spreadsheets/d/1oyqUfh1nlJb6XWEhNJBkDDENReC7WDdKvgyjmMnqSdA/edit?usp=sharing">Field Store GRT</option>
-                <option value="https://docs.google.com/spreadsheets/d/1qMehKZzAT6PzTcAz_PEYEPTk1W3mHplgNh4W_FtcnaA/edit?usp=sharing">Field Store SKT</option>
-                <option value="https://docs.google.com/spreadsheets/d/118A22zfmjnjTPO4YQNC3Q_UViYsYnQ1UoRG7StE71EE/edit?usp=sharing">Field Store WZD</option>
-                <option value="https://docs.google.com/spreadsheets/d/1PIqJnTunGcXdFFiBIvz-1QMlmysCy7KbE_FrTZvndZk/edit?usp=sharing">Field Store Daska</option>
-                <option value="https://docs.google.com/spreadsheets/d/1ZEt6I9qlS3hv1lOSfePLM_jxvc8YSyhelNwJm0NXJrU/edit?usp=sharing">Regional Store</option>
-            </select>
-        </section>
+    <div class="tab-nav">
+      <button onclick="openTab('tab1')" class="active"><i class="fas fa-warehouse"></i> Stores</button>
+      <button onclick="openTab('tab2')"><i class="fas fa-exclamation-triangle"></i> Damaged</button>
+      <button onclick="openTab('tab3')"><i class="fas fa-tools"></i> Repairing</button>
+      <button onclick="openTab('tab5')"><i class="fas fa-file-alt"></i> Abstracts</button>
+      <button onclick="openTab('tab6')"><i class="fas fa-cloud-upload-alt"></i> Submit Results</button>
+    </div>
+    
+    <section id="tab1" class="tab-content" style="display: block;">
+      <h2><i class="fas fa-warehouse"></i> Select store to update transformer status</h2>
+      <div class="option-grid">
+        <a href="https://docs.google.com/spreadsheets/d/1XG1Hpbg_oh2PyicbX0kl9mbtQY-rFJnGWiUOJR6N77I/edit?usp=sharing" target="_blank" class="option-card">
+          <i class="fas fa-warehouse"></i>
+          Field Store HZD
+          <div class="card-description">Update transformer status for Hafizabad store</div>
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/19Y3mlVUq7_aakA5i_lEllppaEknSqmBF8Kugw87wi2k/edit?usp=sharing" target="_blank" class="option-card">
+          <i class="fas fa-warehouse"></i>
+          Field Store MB Din
+          <div class="card-description">Update transformer status for Mandi Bahauddin store</div>
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1cwyRCVcwJmlSBZbJeu9bhksc74p47Iu4bH5THmrPuas/edit?usp=sharing" target="_blank" class="option-card">
+          <i class="fas fa-warehouse"></i>
+          Field Store NRW
+          <div class="card-description">Update transformer status for Narowal store</div>
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1s5Iyxm-HseRodHQ8-mTZyOhkA0ejHGvvG-y4DXe-Tmw/edit?usp=sharing" target="_blank" class="option-card">
+          <i class="fas fa-warehouse"></i>
+          Field Store GRW
+          <div class="card-description">Update transformer status for Gujranwala store</div>
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1oyqUfh1nlJb6XWEhNJBkDDENReC7WDdKvgyjmMnqSdA/edit?usp=sharing" target="_blank" class="option-card">
+          <i class="fas fa-warehouse"></i>
+          Field Store GRT
+          <div class="card-description">Update transformer status for Gujrat store</div>
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1qMehKZzAT6PzTcAz_PEYEPTk1W3mHplgNh4W_FtcnaA/edit?usp=sharing" target="_blank" class="option-card">
+          <i class="fas fa-warehouse"></i>
+          Field Store SKT
+          <div class="card-description">Update transformer status for Sialkot store</div>
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/118A22zfmjnjTPO4YQNC3Q_UViYsYnQ1UoRG7StE71EE/edit?usp=sharing" target="_blank" class="option-card">
+          <i class="fas fa-warehouse"></i>
+          Field Store WZD
+          <div class="card-description">Update transformer status for Wazirabad store</div>
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1PIqJnTunGcXdFFiBIvz-1QMlmysCy7KbE_FrTZvndZk/edit?usp=sharing" target="_blank" class="option-card">
+          <i class="fas fa-warehouse"></i>
+          Field Store Daska
+          <div class="card-description">Update transformer status for Daska store</div>
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1ZEt6I9qlS3hv1lOSfePLM_jxvc8YSyhelNwJm0NXJrU/edit?usp=sharing" target="_blank" class="option-card">
+          <i class="fas fa-warehouse"></i>
+          Regional Store
+          <div class="card-description">Update transformer status for Regional store</div>
+        </a>
+      </div>
+    </section>
 
-        <section id="tab2" class="tab-content">
-            <h2><i class="fas fa-exclamation-triangle"></i> View Damaged Transformers Status</h2>
-            <select id="dropdown-tab2">
-                <option value="">Select Status</option>
-                <option value="tfDamaged.html">Damaged Transformers</option>
-                <option value="tfReclaimed.html">Reclaimed Transformers</option>
-                <option value="tfIrreparable.html">Irrepairable Transformers</option>
-            </select>
-        </section>
+    <section id="tab2" class="tab-content" style="display: none;">
+      <h2><i class="fas fa-exclamation-triangle"></i> View Damaged Transformers Status</h2>
+      <div class="option-grid">
+        <a href="tfDamaged.html" class="option-card">
+          <i class="fas fa-times-circle"></i>
+          Damaged Transformers
+          <div class="card-description">View all damaged transformers</div>
+        </a>
+        <a href="tfReclaimed.html" class="option-card">
+          <i class="fas fa-check-circle"></i>
+          Reclaimed Transformers
+          <div class="card-description">View all reclaimed transformers</div>
+        </a>
+        <a href="tfIrreparable.html" class="option-card">
+          <i class="fas fa-ban"></i>
+          Irrepairable Transformers
+          <div class="card-description">View all irreparable transformers</div>
+        </a>
+      </div>
+    </section>
 
-        <section id="tab3" class="tab-content">
-            <h2><i class="fas fa-tools"></i> Update Transformers Repairing Status</h2>
-            <select id="dropdown-tab3">
-                <option value="">Select TRW</option>
-                <option value="https://docs.google.com/spreadsheets/d/1K080cPaRrA1bc2YwG9CfYQuxy04JozncRfPqsqkb1FA/edit?usp=sharing">TRW Gujranwala</option>
-                <option value="https://docs.google.com/spreadsheets/d/197Fl1uzKPoyU2NBwIySAkPrFYSuEpDZ_43JEpeKvC3c/edit?usp=sharing">TRW Sialkot</option>
-            </select>
-        </section>
+    <section id="tab3" class="tab-content" style="display: none;">
+      <h2><i class="fas fa-tools"></i> Update Transformers Repairing Status</h2>
+      <div class="option-grid">
+        <a href="https://docs.google.com/spreadsheets/d/1K080cPaRrA1bc2YwG9CfYQuxy04JozncRfPqsqkb1FA/edit?usp=sharing" target="_blank" class="option-card">
+          <i class="fas fa-hammer"></i>
+          TRW Gujranwala
+          <div class="card-description">Update repairing status for Gujranwala workshop</div>
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/197Fl1uzKPoyU2NBwIySAkPrFYSuEpDZ_43JEpeKvC3c/edit?usp=sharing" target="_blank" class="option-card">
+          <i class="fas fa-hammer"></i>
+          TRW Sialkot
+          <div class="card-description">Update repairing status for Sialkot workshop</div>
+        </a>
+      </div>
+    </section>
 
-        <section id="tab5" class="tab-content">
-            <h2><i class="fas fa-file-alt"></i> Transformers Abstracts</h2>
-            <select id="dropdown-tab5">
-                <option value="">Select Abstract Type</option>
-                <option value="absTRW.html">All Daily Reclaimed Statements</option>
-                <option value="https://docs.google.com/spreadsheets/d/1ludkbDevBLddzMCV5Q_wb01TB9IJu8GrJpdP5hjYZ3U/edit?usp=drivesdk">Transformer Result Sheet</option>
-                <option value="google-sheet-link-oil-filling">Oil Filling</option>
-            </select>
-        </section>
+    <section id="tab5" class="tab-content" style="display: none;">
+      <h2><i class="fas fa-file-alt"></i> Transformers Abstracts</h2>
+      <div class="option-grid">
+        <a href="absTRW.html" class="option-card">
+          <i class="fas fa-file-invoice"></i>
+          All Daily Reclaimed Statements
+          <div class="card-description">View daily reclaimed transformer statements</div>
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1ludkbDevBLddzMCV5Q_wb01TB9IJu8GrJpdP5hjYZ3U/edit?usp=drivesdk" target="_blank" class="option-card">
+          <i class="fas fa-file-excel"></i>
+          Transformer Result Sheet
+          <div class="card-description">View complete transformer results sheet</div>
+        </a>
+        <a href="google-sheet-link-oil-filling" target="_blank" class="option-card">
+          <i class="fas fa-oil-can"></i>
+          Oil Filling
+          <div class="card-description">Update oil filling records</div>
+        </a>
+      </div>
+    </section>
 
-        <section id="tab6" class="tab-content">
-            <h2><i class="fas fa-cloud-upload-alt"></i> Submit Online Results</h2>
-            <select id="dropdown-tab6">
-                <option value="">Select TRW</option>
-                <option value="https://docs.google.com/forms/d/e/1FAIpQLSeQ0X_uzQ0wDQI-PkQ0I59Gq9MqbUCUeRw2Hjx2HcQoLYhKzQ/viewform?usp=header">TRW GRW</option>
-                <option value="https://docs.google.com/forms/d/e/1FAIpQLSdOXVHVeR61BBGky19ULXXKGUxDqKsS1t61AlAYWHe9Sq_YXQ/viewform?usp=header">TRW SKT</option>
-            </select>
-        </section>
-           
-        <section class="contact-card">
-            <h2><i class="fas fa-envelope"></i> Contact</h2>
-            <div class="contact-info">
-                <p><i class="fas fa-user-tie"></i> Website created and managed by Muhammad Akram, Additional SE GEPCO Gujranwala</p>
-                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:eengingineer.akram@gmail.com">eengingineer.akram@gmail.com</a></p>
-            </div>
-            
-            <h3><i class="fas fa-comment-alt"></i> Feedback</h3>
-            <textarea placeholder="Please share your feedback or suggestions here..."></textarea>
-            <button onclick="sendFeedback()"><i class="fas fa-paper-plane"></i> Send Feedback</button>
-        </section>
-    </main>
+    <section id="tab6" class="tab-content" style="display: none;">
+      <h2><i class="fas fa-cloud-upload-alt"></i> Submit Online Results</h2>
+      <div class="option-grid">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQ0X_uzQ0wDQI-PkQ0I59Gq9MqbUCUeRw2Hjx2HcQoLYhKzQ/viewform?usp=header" target="_blank" class="option-card">
+          <i class="fas fa-file-upload"></i>
+          TRW GRW
+          <div class="card-description">Submit results for Gujranwala workshop</div>
+        </a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdOXVHVeR61BBGky19ULXXKGUxDqKsS1t61AlAYWHe9Sq_YXQ/viewform?usp=header" target="_blank" class="option-card">
+          <i class="fas fa-file-upload"></i>
+          TRW SKT
+          <div class="card-description">Submit results for Sialkot workshop</div>
+        </a>
+      </div>
+    </section>
+  </main>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Transformer Reclamation Workshops, M&T Division - GEPCO Gujranwala. All rights reserved.</p>
-            <p>Developed by Muhammad Akram</p>
-        </div>
-    </footer>
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 Transformer Reclamation Workshops, M&T Division - GEPCO Gujranwala. All rights reserved.</p>
+      <p>Developed by Muhammad Akram | <span class="status-indicator active"><i class="fas fa-circle"></i> System Operational</span></p>
+    </div>
+  </footer>
 
-    <script>
-        // Update datetime display
-        const datetimeElement = document.getElementById('datetime');
-        function updateDateTime() {
-            const now = new Date();
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            };
-            datetimeElement.textContent = now.toLocaleDateString('en-US', options);
-        }
-        updateDateTime();
-        setInterval(updateDateTime, 1000);
+  <script>
+    // Update datetime
+    const datetimeElement = document.getElementById('datetime');
+    function updateDateTime() {
+      const now = new Date();
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      };
+      datetimeElement.textContent = now.toLocaleDateString('en-PK', options);
+    }
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Dropdown functionality
-        function setupDropdown(dropdownId) {
-            const dropdown = document.getElementById(dropdownId);
-            dropdown.addEventListener('change', (e) => {
-                const link = e.target.value;
-                if (link) {
-                    window.open(link, '_blank');
-                    // Reset dropdown after selection
-                    setTimeout(() => {
-                        e.target.value = '';
-                    }, 1000);
-                }
-            });
-        }
-
-        // Initialize all dropdowns
-        setupDropdown('dropdown-tab1');
-        setupDropdown('dropdown-tab2');
-        setupDropdown('dropdown-tab3');
-        setupDropdown('dropdown-tab5');
-        setupDropdown('dropdown-tab6');
-        
-        // Feedback function
-        function sendFeedback() {
-            const feedbackText = document.querySelector('textarea').value;
-            if (feedbackText.trim() === '') {
-                alert('Please enter your feedback before sending.');
-                return;
-            }
-            
-            // In a real implementation, you would send this to a server
-            console.log('Feedback submitted:', feedbackText);
-            
-            // Show confirmation
-            alert('Thank you for your feedback! It has been sent to eengingineer.akram@gmail.com');
-            document.querySelector('textarea').value = '';
-        }
-    </script>
+    // Tab navigation functionality
+    function openTab(tabId) {
+      // Hide all tab contents
+      const tabContents = document.getElementsByClassName('tab-content');
+      for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].style.display = 'none';
+      }
+      
+      // Remove active class from all tab buttons
+      const tabButtons = document.querySelectorAll('.tab-nav button');
+      tabButtons.forEach(button => {
+        button.classList.remove('active');
+      });
+      
+      // Show the selected tab content
+      document.getElementById(tabId).style.display = 'block';
+      
+      // Add active class to the clicked button
+      event.currentTarget.classList.add('active');
+      
+      // Update breadcrumb
+      const tabName = event.currentTarget.textContent.trim();
+      document.querySelector('.breadcrumb').innerHTML = `
+        <a href="#" onclick="openTab('tab1'); return false;"><i class="fas fa-home"></i> Home</a>
+        <span class="breadcrumb-separator">/</span>
+        <span>${tabName}</span>
+      `;
+    }
+  </script>
 </body>
 </html>
